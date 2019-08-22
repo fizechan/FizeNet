@@ -9,10 +9,11 @@
         }
     ],
     "require": {
-		"php": ">=7.0.0",
-		"fize/io": "*"
-	},
-	"autoload": {
+        "php": ">=7.0.0",
+        "ext-curl": "*",
+        "fize/io": "*@dev"
+    },
+    "autoload": {
         "psr-4": {
             "fize\\net\\": "src"
         }

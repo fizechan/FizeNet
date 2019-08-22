@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac20c4b9af508f6e8f72e837e119edb0",
+    "content-hash": "186e711794cf8ee2966058a8cc0c6779",
     "packages": [
         {
             "name": "fize/io",
-            "version": "v1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cfz87862529/FizeIO.git",
@@ -52,11 +52,14 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "fize/io": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "ext-curl": "*"
     },
     "platform-dev": []
 }
