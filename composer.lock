@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "ac20c4b9af508f6e8f72e837e119edb0",
+    "packages": [
+        {
+            "name": "fize/io",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cfz87862529/FizeIO.git",
+                "reference": "1d4ca1608fcc23af40865a7dd868684e37708280"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cfz87862529/FizeIO/zipball/1d4ca1608fcc23af40865a7dd868684e37708280",
+                "reference": "1d4ca1608fcc23af40865a7dd868684e37708280",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "fize\\io\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "FizeChan",
+                    "email": "chenfengzhan@qq.com"
+                }
+            ],
+            "description": "common input/output libraries, produced by FizeChan.",
+            "time": "2019-08-22T03:29:30+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.0.0"
+    },
+    "platform-dev": []
+}

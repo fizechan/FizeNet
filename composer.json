@@ -1,0 +1,20 @@
+{
+    "name": "fize/net",
+    "description": "common network libraries, produced by FizeChan.",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "FizeChan",
+            "email": "chenfengzhan@qq.com"
+        }
+    ],
+    "require": {
+		"php": ">=7.0.0",
+		"fize/io": "*"
+	},
+	"autoload": {
+        "psr-4": {
+            "fize\\net\\": "src"
+        }
+    }
+}
