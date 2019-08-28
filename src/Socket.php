@@ -8,6 +8,7 @@ use Exception;
 
 /**
  * Socket
+ * @package fize\net
  */
 class Socket
 {

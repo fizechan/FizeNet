@@ -4,10 +4,8 @@
 namespace fize\net;
 
 /**
- * Description of SVN
- *
- * @author Fize Chan
- * @version V1.0.0.20170111
+ * Class Svn
+ * @package fize\net
  */
 class Svn
 {

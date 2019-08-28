@@ -47,6 +47,7 @@ class Ftp
 
     /**
      * 格式化路径，解决中文乱码及中文路径无效问题
+     * @todo 待测试修改
      * @param string $path 要格式化的路径
      * @return string
      */

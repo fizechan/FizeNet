@@ -8,6 +8,7 @@ use CURLFile;
 
 /**
  * Http 工具类
+ * @package fize\net
  */
 class Http
 {
@@ -15,64 +16,64 @@ class Http
     /**
      * @var int 错误代码
      */
-    private $_errCode = 0;
+    private $errCode = 0;
 
     /**
      * @var string 错误描述
      */
-    private $_errMsg = "";
+    private $errMsg = "";
 
     /**
      * @var int HTTP状态码
      */
-    private $_httpCode = 200;
+    private $httpCode = 200;
 
     /**
      * @var array 请求头
      */
-    private $_requestHeaders = [];
+    private $requestHeaders = [];
 
     /**
      * @var array 响应头
      */
-    private $_responseHeaders = [];
+    private $responseHeaders = [];
 
     /**
      * @var array 额外选项
      */
-    private $_options = [];
+    private $options = [];
 
     /**
      * @var string 保存COOKIE的文件夹路径,为null时表示不使用COOKIE
      */
-    private $_cookieFileDir = null;
+    private $cookieFileDir = null;
 
     /**
      * @var int 设定超时时间，单位秒
      */
-    private $_timeOut = 30;
+    private $timeOut = 30;
 
     /**
      * 最后获取的信息列表
      * @var array
      */
-    private $_info = [];
+    private $info = [];
 
     /**
      * CURL重试次数
      * @var int
      */
-    private $_retries = 1;
+    private $retries = 1;
 
     /**
      * @var string 响应内容
      */
-    private $_response = '';
+    private $response = '';
 
     /**
      * @var string 主体内容
      */
-    private $_body = '';
+    private $body = '';
 
     /**
      * 初始化
@@ -82,9 +83,9 @@ class Http
      */
     public function __construct($cookie_dir = null, $time_out = 30, $retries = 1)
     {
-        $this->_cookieFileDir = $cookie_dir;
-        $this->_timeOut = $time_out;
-        $this->_retries = $retries;
+        $this->cookieFileDir = $cookie_dir;
+        $this->timeOut = $time_out;
+        $this->retries = $retries;
     }
 
     /**
@@ -93,7 +94,7 @@ class Http
      */
     public function getLastErrCode()
     {
-        return $this->_errCode;
+        return $this->errCode;
     }
 
     /**
@@ -102,7 +103,7 @@ class Http
      */
     public function getLastErrMsg()
     {
-        return $this->_errMsg;
+        return $this->errMsg;
     }
 
     /**
@@ -111,7 +112,7 @@ class Http
      */
     public function getLastInfo()
     {
-        return $this->_info;
+        return $this->info;
     }
 
     /**
@@ -120,7 +121,7 @@ class Http
      */
     public function getHttpCode()
     {
-        return $this->_httpCode;
+        return $this->httpCode;
     }
 
     /**
@@ -129,7 +130,7 @@ class Http
      */
     public function getResponse()
     {
-        return $this->_response;
+        return $this->response;
     }
 
     /**
@@ -140,11 +141,11 @@ class Http
     public function getResponseHeaders($key = null)
     {
         if (is_null($key)) {
-            return $this->_responseHeaders;
+            return $this->responseHeaders;
         } else {
-            if(isset($this->_responseHeaders[$key])){
-                return $this->_responseHeaders[$key];
-            }else{
+            if (isset($this->responseHeaders[$key])) {
+                return $this->responseHeaders[$key];
+            } else {
                 return null;
             }
         }
@@ -156,7 +157,7 @@ class Http
      */
     public function getResponseBody()
     {
-        return $this->_body;
+        return $this->body;
     }
 
     /**
@@ -179,7 +180,7 @@ class Http
             } else {
                 $key = $items[0];
                 $val = trim($items[1]);
-                if(preg_match('/^[\'\"]([\w\W]+)[\'\"]$/', $val, $matches)) {
+                if (preg_match('/^[\'\"]([\w\W]+)[\'\"]$/', $val, $matches)) {
                     $val = $matches[1];
                 }
                 $arr_out[$key] = $val;
@@ -195,7 +196,7 @@ class Http
      */
     public function addRequestHeader($key, $value)
     {
-        $this->_requestHeaders[$key] = $value;
+        $this->requestHeaders[$key] = $value;
     }
 
     /**
@@ -204,7 +205,7 @@ class Http
      */
     public function addRequestHeaders(array $headers)
     {
-        $this->_requestHeaders = array_merge($this->_requestHeaders, $headers);
+        $this->requestHeaders = array_merge($this->requestHeaders, $headers);
     }
 
     /**
@@ -214,7 +215,7 @@ class Http
      */
     public function addOption($key, $value)
     {
-        $this->_options[$key] = $value;
+        $this->options[$key] = $value;
     }
 
     /**
@@ -223,7 +224,7 @@ class Http
      */
     public function addOptions(array $options)
     {
-        $this->_options = $this->_options + $options; //本处由于是数字键名，所以不能使用array_merge
+        $this->options = $this->options + $options; //本处由于是数字键名，所以不能使用array_merge
     }
 
     /**
@@ -241,14 +242,14 @@ class Http
             'Upgrade-Insecure-Requests' => '1',
             'User-Agent'                => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
         ];
-        $this->_requestHeaders = $def_headers;
+        $this->requestHeaders = $def_headers;
 
         //默认配置
         $def_opts = [
-            CURLOPT_TIMEOUT           => $this->_timeOut,
-            CURLOPT_TIMEOUT_MS        => $this->_timeOut * 1000,
-            CURLOPT_CONNECTTIMEOUT    => $this->_timeOut,
-            CURLOPT_CONNECTTIMEOUT_MS => $this->_timeOut * 1000,
+            CURLOPT_TIMEOUT           => $this->timeOut,
+            CURLOPT_TIMEOUT_MS        => $this->timeOut * 1000,
+            CURLOPT_CONNECTTIMEOUT    => $this->timeOut,
+            CURLOPT_CONNECTTIMEOUT_MS => $this->timeOut * 1000,
             CURLOPT_AUTOREFERER       => true, //根据 Location: 重定向时，自动设置 header 中的Referer:信息。
             CURLOPT_FILETIME          => true, //尝试获取远程文档中的修改时间信息
             CURLOPT_FOLLOWLOCATION    => true, //根据服务器返回 HTTP 头中的 "Location: " 重定向
@@ -259,7 +260,7 @@ class Http
             CURLOPT_HEADER            => true, //返回响应头
             CURLOPT_RETURNTRANSFER    => true, //指定返回结果而不直接输出
         ];
-        $this->_options = $def_opts;
+        $this->options = $def_opts;
     }
 
     /**
@@ -273,14 +274,14 @@ class Http
     protected function http($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $this->reset();
-        if($headers) {
+        if ($headers) {
             $this->addRequestHeaders($headers);
         }
-        $request_headers = $this->_requestHeaders;
-        if($opts) {
+        $request_headers = $this->requestHeaders;
+        if ($opts) {
             $this->addOptions($opts);
         }
-        $opts = $this->_options;
+        $opts = $this->options;
 
         //分析URL，同一个一级域名cookie保存在同一个cookie文件
         $url_info = parse_url($url);
@@ -288,14 +289,14 @@ class Http
         $this->addRequestHeader('Host', $url_info['host']);
 
         $curl_headers = [];
-        foreach ($this->_requestHeaders as $key => $value) {
+        foreach ($this->requestHeaders as $key => $value) {
             $curl_headers[] = "{$key}: {$value}";
         }
         $this->addOption(CURLOPT_HTTPHEADER, $curl_headers);
 
         $this->addOption(CURLOPT_URL, $url); //指定访问链接
 
-        if (!is_null($this->_cookieFileDir)) {
+        if (!is_null($this->cookieFileDir)) {
             //COOKIE全程跟踪
 
             if ($domain_empty) {
@@ -304,8 +305,8 @@ class Http
                 $zhu_host = substr($url_info['host'], stripos($url_info['host'], '.') + 1);
             }
 
-            $cookie_file = $this->_cookieFileDir . "{$zhu_host}.cookie";
-            new File($cookie_file, true); //自动创建文件
+            $cookie_file = $this->cookieFileDir . "{$zhu_host}.cookie";
+            new File($cookie_file, 'w'); //自动创建文件
 
             $pls_opts = [
                 CURLOPT_COOKIEJAR  => $cookie_file, //调用后保存cookie的文件
@@ -316,30 +317,30 @@ class Http
 
         $curl = new Curl();
 
-        $curl->setoptArray($this->_options);
+        $curl->setoptArray($this->options);
         $content = $curl->exec();
         $status = $curl->getinfo();
 
         $not_ok_http_codes = ['0'];
-        while (in_array($status["http_code"], $not_ok_http_codes) && (--$this->_retries > 0)) {
+        while (in_array($status["http_code"], $not_ok_http_codes) && (--$this->retries > 0)) {
             $content = $curl->exec();
             $status = $curl->getinfo();
         }
-        $this->_response = $content;
-        $this->_info = $status;
+        $this->response = $content;
+        $this->info = $status;
         $headerSize = $curl->getinfo(CURLINFO_HEADER_SIZE);
         $curl->close();
         $http_code = intval($status["http_code"]);
-        $this->_httpCode = $http_code;
+        $this->httpCode = $http_code;
         if ($http_code == 200) {
             $response_headers = substr($content, 0, $headerSize);
-            $this->_responseHeaders = $this->analysisHeaders($response_headers);
+            $this->responseHeaders = $this->analysisHeaders($response_headers);
             if (isset($opts[CURLOPT_FOLLOWLOCATION]) && $opts[CURLOPT_FOLLOWLOCATION] && isset($request_headers['Location']) && !empty($request_headers['Location'])) {
                 //@todo 是否需要加上跳转来源URL
                 if ($request_headers['Location'] == $url) {
                     //如果Location就是本页面，则直接返回body
                     $body = substr($content, $headerSize);
-                    $this->_body = $body;
+                    $this->body = $body;
                     return $body;
                 }
 
@@ -351,19 +352,19 @@ class Http
                 }
 
                 $body = substr($content, $headerSize);
-                $this->_body = $body;
+                $this->body = $body;
                 return $body;
             }
         } elseif ($http_code == 301 || $http_code == 302) {
             return $this->http($status['redirect_url'], $request_headers, $opts, $domain_empty);
         } else {
             $response_headers = substr($content, 0, $headerSize);
-            $this->_responseHeaders = $this->analysisHeaders($response_headers);
+            $this->responseHeaders = $this->analysisHeaders($response_headers);
             $body = substr($content, $headerSize);
-            $this->_body = $body;
+            $this->body = $body;
 
-            $this->_errCode = 100001;
-            $this->_errMsg = "请求URL时发生错误,HTTP CODE:[{$http_code}]";
+            $this->errCode = 100001;
+            $this->errMsg = "请求URL时发生错误,HTTP CODE:[{$http_code}]";
             return false;
         }
     }
@@ -394,11 +395,11 @@ class Http
      */
     private function isUploadFile($data)
     {
-        if(!is_array($data)){
+        if (!is_array($data)) {
             return false;
         }
-        foreach ($data as $val){
-            if ($val instanceof CURLFile){
+        foreach ($data as $val) {
+            if ($val instanceof CURLFile) {
                 return true;
             }
         }
@@ -407,22 +408,22 @@ class Http
 
     /**
      * POST请求
-     * @todo 参数传递兼容性应该再思考下
      * @param string $url 指定链接
      * @param mixed $data 可以是数组(推荐)或者请求字符串。
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
+     * @todo 参数传递兼容性应该再思考下
      */
     public function post($url, $data, array $headers = [], array $opts = [], $domain_empty = false)
     {
         if (is_string($data)) {
             $strPOST = $data;
         } else {
-            if($this->isUploadFile($data)){
+            if ($this->isUploadFile($data)) {
                 $strPOST = $data;  //需要POST上传文件时直接传递数组
-            }else{
+            } else {
                 $strPOST = http_build_query($data);
             }
         }
@@ -430,7 +431,7 @@ class Http
             CURLOPT_POST       => true, //设置 HTTP 的 method 为 POST
             CURLOPT_POSTFIELDS => $strPOST, //要传递的参数
         ];
-        if($this->isUploadFile($data)) {
+        if ($this->isUploadFile($data)) {
             $add_opts[CURLOPT_UPLOAD] = true;
         }
         $opts = $opts + $add_opts;

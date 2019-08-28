@@ -4,6 +4,7 @@ namespace fize\net;
 
 /**
  * 多进程CURL操作类
+ * @package fize\net
  */
 class CurlMulti
 {
@@ -11,25 +12,28 @@ class CurlMulti
      * 当前的cURL批处理句柄
      * @var resource
      */
-    private $_mh;
+    private $mh;
 
     /**
      * 已添加的单独CURL对象句柄
      * @var array
      */
-    private $_handles = [];
+    private $handles = [];
 
     /**
      * 析构函数
      */
     public function __construct()
     {
-        $this->_mh = $this->init();
+        $this->mh = $this->init();
     }
 
+    /**
+     * 析构，关闭连接
+     */
     public function __destruct()
     {
-        if ($this->_mh && get_resource_type($this->_mh) == "curl_multi") {
+        if ($this->mh && get_resource_type($this->mh) == "curl_multi") {
             $this->close();
         }
     }
@@ -41,8 +45,8 @@ class CurlMulti
      */
     public function addHandle(Curl $ch)
     {
-        $this->_handles[] = $ch;
-        return curl_multi_add_handle($this->_mh, $ch->getHandle());
+        $this->handles[] = $ch;
+        return curl_multi_add_handle($this->mh, $ch->getHandle());
     }
 
     /**
@@ -69,7 +73,7 @@ class CurlMulti
      */
     public function getHandles()
     {
-        return $this->_handles;
+        return $this->handles;
     }
 
     /**
@@ -77,7 +81,7 @@ class CurlMulti
      */
     public function close()
     {
-        curl_multi_close($this->_mh);
+        curl_multi_close($this->mh);
     }
 
     /**
@@ -87,7 +91,7 @@ class CurlMulti
      */
     public function exec(&$still_running)
     {
-        return curl_multi_exec($this->_mh, $still_running);
+        return curl_multi_exec($this->mh, $still_running);
     }
 
     /**
@@ -107,7 +111,7 @@ class CurlMulti
      */
     public function infoRead(&$msgs_in_queue = null)
     {
-        return curl_multi_info_read($this->_mh, $msgs_in_queue);
+        return curl_multi_info_read($this->mh, $msgs_in_queue);
     }
 
     /**
@@ -126,7 +130,7 @@ class CurlMulti
      */
     public function removeHandle(Curl $ch)
     {
-        return curl_multi_remove_handle($this->_mh, $ch->getHandle());
+        return curl_multi_remove_handle($this->mh, $ch->getHandle());
     }
 
     /**
@@ -154,7 +158,7 @@ class CurlMulti
      */
     public function select($timeout = 1.0)
     {
-        return curl_multi_select($this->_mh, $timeout);
+        return curl_multi_select($this->mh, $timeout);
     }
 
     /**
@@ -165,7 +169,7 @@ class CurlMulti
      */
     public function setopt($option, $value)
     {
-        return curl_multi_setopt($this->_mh, $option, $value);
+        return curl_multi_setopt($this->mh, $option, $value);
     }
 
     /**

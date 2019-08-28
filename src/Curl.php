@@ -8,6 +8,7 @@ use CURLFile;
 /**
  * CURL类
  * @todo 尚有几处未知的参数意义需要补齐
+ * @package fize\net
  */
 class Curl
 {
@@ -16,25 +17,25 @@ class Curl
      *
      * @var string 当前会话链接
      */
-    private $_url = null;
+    private $url = null;
 
     /**
      *
      * @var resource 当前会话句柄
      */
-    private $_handle = null;
+    private $handle = null;
 
     /**
      * 当前会话设置数组
      * @var array
      */
-    private $_opt = [];
+    private $opt = [];
 
     /**
      * 当前会话是否可分享
      * @var bool
      */
-    private $_share = false;
+    private $share = false;
 
 
     /**
@@ -45,10 +46,10 @@ class Curl
      */
     public function __construct($url = null, array $opt = [], $share = false)
     {
-        $this->_share = $share;
-        $this->_handle = $this->init($url);
+        $this->share = $share;
+        $this->handle = $this->init($url);
         if (!empty($url)) {
-            $this->_url = $url;
+            $this->url = $url;
             $this->setopt(CURLOPT_URL, $url);
         }
         if (!empty($opt)) {
@@ -61,7 +62,7 @@ class Curl
      */
     public function __destruct()
     {
-        if ($this->_handle && get_resource_type($this->_handle) == "curl") {
+        if ($this->handle && get_resource_type($this->handle) == "curl") {
             $this->close();
         }
     }
@@ -72,7 +73,7 @@ class Curl
      */
     public function getHandle()
     {
-        return $this->_handle;
+        return $this->handle;
     }
 
     /**
@@ -80,13 +81,13 @@ class Curl
      */
     public function close()
     {
-        if ($this->_share) {
-            curl_share_close($this->_handle);
+        if ($this->share) {
+            curl_share_close($this->handle);
         } else {
-            curl_close($this->_handle);
+            curl_close($this->handle);
         }
-        $this->_handle = null;
-        $this->_opt = [];
+        $this->handle = null;
+        $this->opt = [];
     }
 
     /**
@@ -95,7 +96,7 @@ class Curl
      */
     public function copyHandle()
     {
-        return curl_copy_handle($this->_handle);
+        return curl_copy_handle($this->handle);
     }
 
     /**
@@ -104,7 +105,7 @@ class Curl
      */
     public function errno()
     {
-        return curl_errno($this->_handle);
+        return curl_errno($this->handle);
     }
 
     /**
@@ -113,7 +114,7 @@ class Curl
      */
     public function error()
     {
-        return curl_error($this->_handle);
+        return curl_error($this->handle);
     }
 
     /**
@@ -123,7 +124,7 @@ class Curl
      */
     public function escape($str)
     {
-        return curl_escape($this->_handle, $str);
+        return curl_escape($this->handle, $str);
     }
 
     /**
@@ -132,7 +133,7 @@ class Curl
      */
     public function exec()
     {
-        return curl_exec($this->_handle);
+        return curl_exec($this->handle);
     }
 
     /**
@@ -155,9 +156,9 @@ class Curl
     public function getinfo($opt = null)
     {
         if (is_null($opt)) {
-            return curl_getinfo($this->_handle);
+            return curl_getinfo($this->handle);
         } else {
-            return curl_getinfo($this->_handle, $opt);
+            return curl_getinfo($this->handle, $opt);
         }
     }
 
@@ -168,7 +169,7 @@ class Curl
      */
     public function init($url = null)
     {
-        if ($this->_share) {
+        if ($this->share) {
             return curl_share_init();
         } else {
             return curl_init($url);
@@ -181,8 +182,8 @@ class Curl
      */
     public function setHandle(&$handle)
     {
-        $this->_handle = $handle;
-        $this->_opt = []; //使用此方法则无法获取到已有设置，只能重新设置了。
+        $this->handle = $handle;
+        $this->opt = []; //使用此方法则无法获取到已有设置，只能重新设置了。
     }
 
     /**
@@ -192,7 +193,7 @@ class Curl
      */
     public function pause($bitmask)
     {
-        return curl_pause($this->_handle, $bitmask);
+        return curl_pause($this->handle, $bitmask);
     }
 
     /**
@@ -200,8 +201,8 @@ class Curl
      */
     public function reset()
     {
-        curl_reset($this->_handle);
-        $this->_opt = [];
+        curl_reset($this->handle);
+        $this->opt = [];
     }
 
     /**
@@ -211,9 +212,9 @@ class Curl
      */
     public function setoptArray($options)
     {
-        $rst = curl_setopt_array($this->_handle, $options);
+        $rst = curl_setopt_array($this->handle, $options);
         if ($rst) {
-            $this->_opt = $options + $this->_opt; //因为是数字键名，不能使用array_merge
+            $this->opt = $options + $this->opt; //因为是数字键名，不能使用array_merge
         }
         return $rst;
     }
@@ -226,13 +227,13 @@ class Curl
      */
     public function setopt($option, $value)
     {
-        if ($this->_share) {
-            $rst = curl_share_setopt($this->_handle, $option, $value);
+        if ($this->share) {
+            $rst = curl_share_setopt($this->handle, $option, $value);
         } else {
-            $rst = curl_setopt($this->_handle, $option, $value);
+            $rst = curl_setopt($this->handle, $option, $value);
         }
         if ($rst) {
-            $this->_opt[$option] = $value;
+            $this->opt[$option] = $value;
         }
         return $rst;
     }
@@ -243,7 +244,7 @@ class Curl
      */
     public function getopt()
     {
-        return $this->_opt;
+        return $this->opt;
     }
 
     /**
@@ -263,7 +264,7 @@ class Curl
      */
     public function unescape($str)
     {
-        return curl_unescape($this->_handle, $str);
+        return curl_unescape($this->handle, $str);
     }
 
     /**
