@@ -414,7 +414,6 @@ class Http
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
-     * @todo 参数传递兼容性应该再思考下
      */
     public function post($url, $data, array $headers = [], array $opts = [], $domain_empty = false)
     {
@@ -431,9 +430,6 @@ class Http
             CURLOPT_POST       => true, //设置 HTTP 的 method 为 POST
             CURLOPT_POSTFIELDS => $strPOST, //要传递的参数
         ];
-        if ($this->isUploadFile($data)) {
-            $add_opts[CURLOPT_UPLOAD] = true;
-        }
         $opts = $opts + $add_opts;
         return $this->http($url, $headers, $opts, $domain_empty);
     }
@@ -535,6 +531,9 @@ class Http
             CURLOPT_CUSTOMREQUEST => "PUT", //设置 HTTP 的 method 为 PUT
             CURLOPT_POSTFIELDS    => $strPOST, //要传递的参数
         ];
+        if ($this->isUploadFile($data)) {
+            $add_opts[CURLOPT_UPLOAD] = true;
+        }
         $opts = $opts + $add_opts;
         return $this->http($url, $headers, $opts, $domain_empty);
     }
