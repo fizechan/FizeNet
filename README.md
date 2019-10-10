@@ -1,2 +1,2 @@
 # FizeNet
-common network libraries, produced by FizeChan.
+网络相关操作类
