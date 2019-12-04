@@ -384,6 +384,7 @@ class Http
 
     /**
      * GET 请求
+	 *
      * 如果有GET参数需要附加请自行构建最终URL
      * @param string $url 指定链接
      * @param array $headers 附加的文件头
