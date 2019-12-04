@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
@@ -9,7 +8,6 @@ use CURLFile;
 
 /**
  * Http 工具类
- * @package fize\net
  */
 class Http
 {
@@ -265,14 +263,14 @@ class Http
     }
 
     /**
-     * 底层发起HTTP请求
+     * 底层发起 HTTP 请求
      * @param string $url 指定URL
      * @param array $headers 设置请求头
      * @param array $opts 设置CURL选项
      * @param bool $domain_empty 指明该链接是否是无主域链接
      * @return mixed 成功时返回主体内容，失败时返回false
      */
-    protected function http($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public function send($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $this->reset();
         if ($headers) {
@@ -371,7 +369,21 @@ class Http
     }
 
     /**
-     * GET请求
+     * 简易 HTTP 访问
+     * @param string $url 指定链接
+     * @param array $headers 附加的文件头
+     * @param array $opts 参数配置数组
+     * @param bool $domain_empty 该链接是否是无主域链接
+     * @return string 返回响应内容，失败是返回false
+     */
+    private static function http($url, array $headers = [], array $opts = [], $domain_empty = false)
+    {
+        $http = new self();
+        return $http->send($url, $headers, $opts, $domain_empty);
+    }
+
+    /**
+     * GET 请求
      * 如果有GET参数需要附加请自行构建最终URL
      * @param string $url 指定链接
      * @param array $headers 附加的文件头
@@ -379,14 +391,14 @@ class Http
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function get($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function get($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_HTTPGET => true, //设置 HTTP 的 method 为 GET
             CURLOPT_UPLOAD  => false, //GET模式默认不上传文件
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
@@ -394,7 +406,7 @@ class Http
      * @param $data
      * @return bool
      */
-    private function isUploadFile($data)
+    private static function isUploadFile($data)
     {
         if (!is_array($data)) {
             return false;
@@ -408,7 +420,7 @@ class Http
     }
 
     /**
-     * POST请求
+     * POST 请求
      * @param string $url 指定链接
      * @param mixed $data 可以是数组(推荐)或者请求字符串。
      * @param array $headers 设定请求头设置
@@ -416,12 +428,12 @@ class Http
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function post($url, $data, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function post($url, $data, array $headers = [], array $opts = [], $domain_empty = false)
     {
         if (is_string($data)) {
             $strPOST = $data;
         } else {
-            if ($this->isUploadFile($data)) {
+            if (self::isUploadFile($data)) {
                 $strPOST = $data;  //需要POST上传文件时直接传递数组
             } else {
                 $strPOST = http_build_query($data);
@@ -432,83 +444,83 @@ class Http
             CURLOPT_POSTFIELDS => $strPOST, //要传递的参数
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * OPTIONS请求
+     * OPTIONS 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function options($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function options($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "OPTIONS",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * HEAD请求
+     * HEAD 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function head($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function head($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "HEAD",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * DELETE请求
+     * DELETE 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function delete($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function delete($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "DELETE",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * PATCH请求
+     * PATCH 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function patch($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function patch($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "PATCH",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * PUT请求
+     * PUT 请求
      * @param string $url 指定链接
      * @param mixed $data 可以是数组(推荐)或者请求字符串。
      * @param array $headers 设定请求头设置
@@ -516,12 +528,12 @@ class Http
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function put($url, $data = '', array $headers = [], array $opts = [], $domain_empty = false)
+    public static function put($url, $data = '', array $headers = [], array $opts = [], $domain_empty = false)
     {
         if (is_string($data)) {
             $strPOST = $data;
         } else {
-            if ($this->isUploadFile($data)) {
+            if (self::isUploadFile($data)) {
                 $strPOST = $data;  //需要POST上传文件时直接传递数组
             } else {
                 $strPOST = http_build_query($data);
@@ -532,118 +544,118 @@ class Http
             CURLOPT_CUSTOMREQUEST => "PUT", //设置 HTTP 的 method 为 PUT
             CURLOPT_POSTFIELDS    => $strPOST, //要传递的参数
         ];
-        if ($this->isUploadFile($data)) {
+        if (self::isUploadFile($data)) {
             $add_opts[CURLOPT_UPLOAD] = true;
         }
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * TRACE请求
+     * TRACE 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function trace($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function trace($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "TRACE",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * MOVE请求
+     * MOVE 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function move($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function move($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "MOVE",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * COPY请求
+     * COPY 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function copy($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function copy($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "COPY",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * LINK请求
+     * LINK 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function link($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function link($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "LINK",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * UNLINK请求
+     * UNLINK 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function unlink($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function unlink($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "UNLINK",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 
     /**
-     * WRAPPED请求
+     * WRAPPED 请求
      * @param string $url 指定链接
      * @param array $headers 设定请求头设置
      * @param array $opts 参数配置数组
      * @param bool $domain_empty 该链接是否是无主域链接
      * @return string 返回响应内容，失败是返回false
      */
-    public function wrapped($url, array $headers = [], array $opts = [], $domain_empty = false)
+    public static function wrapped($url, array $headers = [], array $opts = [], $domain_empty = false)
     {
         $add_opts = [
             CURLOPT_CUSTOMREQUEST => "WRAPPED",
             CURLOPT_UPLOAD        => false,
         ];
         $opts = $opts + $add_opts;
-        return $this->http($url, $headers, $opts, $domain_empty);
+        return self::http($url, $headers, $opts, $domain_empty);
     }
 }

@@ -4,8 +4,8 @@
 namespace fize\net;
 
 /**
- * Class Svn
- * @package fize\net
+ * SVN 操作类
+ * @todo 待实现
  */
 class Svn
 {

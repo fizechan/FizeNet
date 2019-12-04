@@ -1,22 +1,20 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
 /**
- * 多进程CURL操作类
- * @package fize\net
+ * 多进程 CURL 操作类
  */
 class CurlMulti
 {
     /**
-     * 当前的cURL批处理句柄
+     * 当前的 cURL 批处理句柄
      * @var resource
      */
     private $mh;
 
     /**
-     * 已添加的单独CURL对象句柄
+     * 已添加的单独 CURL 对象句柄
      * @var array
      */
     private $handles = [];
@@ -40,7 +38,7 @@ class CurlMulti
     }
 
     /**
-     * 向当前批处理会话中添加一个CURL对象作为句柄
+     * 向当前批处理会话中添加一个 CURL 对象作为句柄
      * @param Curl $ch 要添加进去的CURL对象
      * @return int
      */
@@ -51,7 +49,7 @@ class CurlMulti
     }
 
     /**
-     * 以数组形式向当前批处理会话中添加多个CURL对象作为句柄
+     * 以数组形式向当前批处理会话中添加多个 CURL 对象作为句柄
      * @param array $chs 元素为CURL对象的数组
      * @return bool
      */
@@ -69,7 +67,7 @@ class CurlMulti
     }
 
     /**
-     * 获取当前已添加的单独CURL对象句柄
+     * 获取当前已添加的单独 CURL 对象句柄
      * @return array
      */
     public function getHandles()
@@ -106,7 +104,7 @@ class CurlMulti
     }
 
     /**
-     * 获取当前解析的cURL的相关传输信息
+     * 获取当前解析的 cURL 的相关传输信息
      * @param int $msgs_in_queue 仍在队列中的消息数量。
      * @return array
      */
@@ -116,7 +114,7 @@ class CurlMulti
     }
 
     /**
-     * 返回一个新cURL批处理句柄
+     * 返回一个新 cURL 批处理句柄
      * @return resource
      */
     private function init()
@@ -125,7 +123,9 @@ class CurlMulti
     }
 
     /**
-     * 移除curl批处理句柄资源中的某个句柄资源,成功时返回一个cURL句柄，失败时返回 FALSE 。
+     * 移除 curl 批处理句柄资源中的某个句柄资源
+     *
+     * 成功时返回一个cURL句柄，失败时返回 FALSE 。
      * @param Curl $ch 要移除的Curl对象
      * @return int
      */
@@ -135,8 +135,10 @@ class CurlMulti
     }
 
     /**
-     * 以数组形式对当前批处理会话中移除多个CURL对象句柄，成功时返回true，失败返回false
-     * @param array $chs 要移除的Curl对象组成的数组
+     * 以数组形式对当前批处理会话中移除多个 CURL 对象句柄
+     *
+     * 成功时返回true，失败返回 false
+     * @param array $chs 要移除的 Curl 对象组成的数组
      * @return bool
      */
     public function removeHandles(array $chs)
@@ -153,7 +155,7 @@ class CurlMulti
     }
 
     /**
-     * 等待所有cURL批处理中的活动连接,如果失败返回-1
+     * 等待所有 cURL 批处理中的活动连接,如果失败返回 -1
      * @param float $timeout 设定超时秒数
      * @return int
      */

@@ -1,16 +1,17 @@
-<?php /** @noinspection PhpComposerExtensionStubsInspection */
+<?php
+/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
 /**
  * FTP管理类
+ * @todo 待测试
  */
 class Ftp
 {
 
     /**
-     * FTP 连接标示符
-     * @var resource
+     * @var resource FTP 连接标示符
      */
     private $_stream;
 

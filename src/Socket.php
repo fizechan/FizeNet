@@ -8,8 +8,8 @@ namespace fize\net;
 use Exception;
 
 /**
- * Socket
- * @package fize\net
+ * Socket 套接字
+ * @todo 待测试
  */
 class Socket
 {
@@ -38,6 +38,7 @@ class Socket
 
     /**
      * 返回当前套接字上的当前连接Socket对象
+     *
      * 即为每个连接分发一个独立Socket对象
      * @return Socket
      * @throws Exception
@@ -53,6 +54,7 @@ class Socket
 
     /**
      * 给套接字绑定名字
+     *
      * 如果套接字是 AF_INET族，那么 address 必须是一个四点分法的 IP 地址（例如 127.0.0.1 ）,该类型较为常用
      * 如果套接字是 AF_UNIX族，那么 address 是 Unix 套接字一部分（例如 /tmp/my.sock ）。
      * @param string $address 服务端地址
@@ -84,6 +86,7 @@ class Socket
 
     /**
      * 计算应分配用于接收辅助数据的缓冲区的大小。
+     *
      * 该方法由于官方文档不齐全，暂不建议使用
      * @param int $level
      * @param int $type
@@ -124,8 +127,11 @@ class Socket
 
     /**
      * 创建一对无区别的套接字Socket对象，并将它们存储在数组$obj中
+     *
+     * 参数 `$type` :
+     *   SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
      * @param int $domain 指定协议 AF_INET/AF_INET6/AF_UNIX
-     * @param int $type 套接字使用的类型 SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
+     * @param int $type 套接字使用的类型
      * @param int $protocol 定 domain 套接字下的具体协议
      * @param array $obj 注意该数组保存的是Socket对象而非socket资源
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE 。
@@ -144,8 +150,11 @@ class Socket
 
     /**
      * 创建一个套接字
+     *
+     * 参数 `$type` :
+     *   SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
      * @param int $domain 指定协议 AF_INET/AF_INET6/AF_UNIX
-     * @param int $type 套接字使用的类型 SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
+     * @param int $type 套接字使用的类型
      * @param int $protocol 定 domain 套接字下的具体协议
      * @return Socket
      * @throws Exception
@@ -253,9 +262,16 @@ class Socket
 
     /**
      * 从已连接的socket接收数据
-     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。 如果有错误发生，如链接被重置，数据不可用等等， buf 将被设为 NULL 。
+     *
+     * 参数 `$buf` :
+     *   如果有错误发生，如链接被重置，数据不可用等等， buf 将被设为 NULL 。
+     * 参数 `$flags` :
+     *   flags的值可以为下列任意flag的组合。
+     *   使用按位或运算符(|)来 组合不同的flag。
+     *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
+     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。
      * @param int $len 长度最多为 len 字节的数据将被接收。
-     * @param int $flags flags的值可以为下列任意flag的组合。使用按位或运算符(|)来 组合不同的flag。MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
+     * @param int $flags 标识
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recv(&$buf, $len, $flags)
@@ -265,9 +281,16 @@ class Socket
 
     /**
      * 从socket(导向连接也可以)接收数据
-     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。 如果有错误发生，如链接被重置，数据不可用等等， buf 将被设为 NULL 。
+     *
+     * 参数 `$buf` :
+     *    如果有错误发生，如链接被重置，数据不可用等等， buf 将被设为 NULL 。
+     * 参数 `$flags` :
+     *   flags的值可以为下列任意flag的组合。
+     *   使用按位或运算符(|)来 组合不同的flag。
+     *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
+     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。
      * @param int $len 长度最多为 len 字节的数据将被接收。
-     * @param int $flags flags的值可以为下列任意flag的组合。使用按位或运算符(|)来 组合不同的flag。MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
+     * @param int $flags 标识
      * @param string $name 获取到的主机
      * @param int $port 获取到的端口
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
@@ -279,9 +302,14 @@ class Socket
 
     /**
      * 读取消息
+     *
      * 该方法由于官方文档未编写，不建议使用
+     * 参数 `$flags` :
+     *   flags的值可以为下列任意flag的组合。
+     *   使用按位或运算符(|)来 组合不同的flag。
+     *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
      * @param string $message
-     * @param int $flags flags的值可以为下列任意flag的组合。使用按位或运算符(|)来 组合不同的flag。MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
+     * @param int $flags 标识
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recvMsg($message, $flags = null)
@@ -291,6 +319,7 @@ class Socket
 
     /**
      * socket多路选择
+     *
      * 注意返回的是socket资源而非Socket对象
      * @param array $read 监听到的发生读取的socket资源
      * @param array $write 监听到的发生写入的socket资源
@@ -318,6 +347,7 @@ class Socket
 
     /**
      * 发送消息
+     *
      * 该方法由于官方文档未编写，不建议使用
      * @param array $message
      * @param int $flags
@@ -374,6 +404,7 @@ class Socket
 
     /**
      * 设置当前socket
+     *
      * 实际是socket_set_option的别名socket_setopt
      * @param int $level 指定协议级别
      * @param int $optname 选项名

@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
@@ -7,9 +6,8 @@ namespace fize\net;
 use CURLFile;
 
 /**
- * CURL类
+ * CURL 类
  * @todo 尚有几处未知的参数意义需要补齐
- * @package fize\net
  */
 class Curl
 {
@@ -92,7 +90,7 @@ class Curl
     }
 
     /**
-     * 复制当前CURL句柄和其所有选项
+     * 复制当前 CURL 句柄和其所有选项
      * @return resource
      */
     public function copyHandle()
@@ -138,7 +136,7 @@ class Curl
     }
 
     /**
-     * 创建一个用于上传的CURLFile对象
+     * 创建一个用于上传的 CURLFile 对象
      * @param string $filename 文件路径
      * @param string $mimetype MIME
      * @param string $postname 文件域表单名称
@@ -150,7 +148,7 @@ class Curl
     }
 
     /**
-     * 获取当前cURL连接资源句柄的信息
+     * 获取当前 cURL 连接资源句柄的信息
      * @param int $opt 参数常量
      * @return mixed
      */
@@ -164,8 +162,8 @@ class Curl
     }
 
     /**
-     * 返回一个CURL句柄
-     * @param string $url 指定链接URL
+     * 返回一个 CURL 句柄
+     * @param string $url 指定链接 URL
      * @return resource
      */
     public function init($url = null)
@@ -188,7 +186,9 @@ class Curl
     }
 
     /**
-     * 暂停或解除暂停当前会话，官方文档不齐全，不建议使用
+     * 暂停或解除暂停当前会话
+     *
+     * 官方文档不齐全，不建议使用
      * @param int $bitmask 参数意义未知
      * @return int
      */
@@ -222,8 +222,8 @@ class Curl
 
     /**
      * 为当前传输会话设置选项
-     * @param int $option 需要设置的CURLOPT_XXX选项。
-     * @param mixed $value 将设置在option选项上的值。
+     * @param int $option 需要设置的 CURLOPT_XXX 选项。
+     * @param mixed $value 将设置在 option 选项上的值。
      * @return bool
      */
     public function setopt($option, $value)
@@ -269,7 +269,7 @@ class Curl
     }
 
     /**
-     * 获取cURL版本信息
+     * 获取 cURL 版本信息
      * @param int $age 参数意义未知
      * @return array
      */
