@@ -3,13 +3,17 @@
 namespace fize\net;
 
 
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use fize\io\File;
 use CURLFile;
+
 
 /**
  * Http 工具类
  */
-class Http
+class Http implements ClientInterface
 {
 
     /**
@@ -658,5 +662,13 @@ class Http
         ];
         $opts = $opts + $add_opts;
         return self::http($url, $headers, $opts, $domain_empty);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function sendRequest(RequestInterface $request): ResponseInterface
+    {
+        // TODO: Implement sendRequest() method.
     }
 }

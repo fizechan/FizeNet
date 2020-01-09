@@ -9,8 +9,14 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0.0",
         "ext-curl": "*",
+        "psr/http-message": "~1.0",
+        "psr/http-factory": "~1.0",
+        "psr/http-client": "~1.0",
+        "psr/http-server-middleware": "~1.0",
+        "psr/http-server-handler": "~1.0",
+        "fize/misc": "~0.1",
         "fize/io": "~3.3"
     },
     "require-dev": {
