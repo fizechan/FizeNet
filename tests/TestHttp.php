@@ -63,13 +63,17 @@ class TestHttp extends TestCase
     public function testPost()
     {
         $headers = [
-            'accept' => 'application/json'
+            'Content-Type' => 'application/x-www-form-urlencoded'
         ];
         $body = [
-            'kkk' => '中文测试',
-            'KK2' => '133'
+            'q' => '定制化翻译API语言方向目前只支持中文和英文。',
+            'from' => 'zh',
+            'to' => 'en',
+            'appid' => '20160118000009064',
+            'salt' => '123456',
+            'sign' => '9ac0dad8ab7abafc710bf5a9a8516e51'
         ];
-        $content = Http::post('https://httpbin.org/post', $body, $headers);
+        $content = Http::post('http://api.fanyi.baidu.com/api/trans/vip/translate', $body, $headers);
         echo $content;
         self::assertNotEmpty($content);
     }

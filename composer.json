@@ -1,28 +1,28 @@
 {
-    "name": "fize/net",
-    "description": "网络相关操作类库",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "FizeChan",
-            "email": "chenfengzhan@qq.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.0.0",
-        "ext-curl": "*",
-        "psr/http-message": "~1.0",
-        "fize/http": "~1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.0.0"
-    },
-    "suggest": {
-        "ext-ftp": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "fize\\net\\": "src"
-        }
+  "name": "fize/net",
+  "description": "网络相关操作类库",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "FizeChan",
+      "email": "chenfengzhan@qq.com"
     }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "ext-curl": "*",
+    "psr/http-message": "~1.0",
+    "fize/http": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0.0"
+  },
+  "suggest": {
+    "ext-ftp": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "fize\\net\\": "src"
+    }
+  }
 }
