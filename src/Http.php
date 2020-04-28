@@ -2,17 +2,16 @@
 
 namespace fize\net;
 
+use CURLFile;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
-use fize\http\ClientException;
 use fize\http\Client;
+use fize\http\ClientException;
 use fize\http\Request;
 use fize\http\Response;
-use CURLFile;
-
 
 /**
- * Http 工具类
+ * Http 客户端
  */
 class Http
 {
@@ -83,9 +82,9 @@ class Http
 
     /**
      * 设置公共参数
-     * @param string $cookie_dir 指定保存COOKIE文件的路径，默认null表示不使用COOKIE
-     * @param int $time_out 设定超时时间,默认30秒
-     * @param integer $retries curl重试次数
+     * @param string  $cookie_dir 指定保存COOKIE文件的路径，默认null表示不使用COOKIE
+     * @param int     $time_out   设定超时时间,默认30秒
+     * @param integer $retries    curl重试次数
      */
     public static function config($cookie_dir = null, $time_out = 30, $retries = 1)
     {
@@ -96,24 +95,24 @@ class Http
 
     /**
      * 简易 HTTP 客户端
-     * @param string $method 请求方式
-     * @param string|UriInterface $uri 请求URI
-     * @param string|null|resource|StreamInterface $body 请求体
-     * @param array $headers 报头信息
-     * @param array $opts CURL选项
+     * @param string                               $method  请求方式
+     * @param string|UriInterface                  $uri     请求URI
+     * @param string|null|resource|StreamInterface $body    请求体
+     * @param array                                $headers 报头信息
+     * @param array                                $opts    CURL选项
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function send($method, $uri, $body = null, array $headers = [], array $opts = [])
     {
         $client = new Client(self::$cookieDir, self::$timeOut, self::$retries);
-        if($opts) {
+        if ($opts) {
             $client->setOptions($opts);
         }
         $request = new Request($method, $uri, $body, $headers);
         try {
             $response = $client->sendRequest($request);
             self::$response = $response;
-            if($response->getStatusCode() != 200) {
+            if ($response->getStatusCode() != 200) {
                 self::$errCode = $response->getStatusCode();
                 self::$errMsg = $response->getReasonPhrase();
                 return false;
@@ -128,9 +127,9 @@ class Http
 
     /**
      * GET 请求
-     * @param string $uri 指定链接
-     * @param array $headers 附加的文件头
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 附加的文件头
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function get($uri, array $headers = [], array $opts = [])
@@ -140,10 +139,10 @@ class Http
 
     /**
      * POST 请求
-     * @param string $uri 指定链接
-     * @param string|null|resource|StreamInterface|array $body 请求体
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string                                     $uri     指定链接
+     * @param string|null|resource|StreamInterface|array $body    请求体
+     * @param array                                      $headers 设定请求头设置
+     * @param array                                      $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function post($uri, $body, array $headers = [], array $opts = [])
@@ -153,9 +152,9 @@ class Http
 
     /**
      * OPTIONS 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function options($uri, array $headers = [], array $opts = [])
@@ -165,9 +164,9 @@ class Http
 
     /**
      * HEAD 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function head($uri, array $headers = [], array $opts = [])
@@ -177,9 +176,9 @@ class Http
 
     /**
      * DELETE 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function delete($uri, array $headers = [], array $opts = [])
@@ -189,9 +188,9 @@ class Http
 
     /**
      * PATCH 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function patch($uri, array $headers = [], array $opts = [])
@@ -201,10 +200,10 @@ class Http
 
     /**
      * PUT 请求
-     * @param string $uri 指定链接
-     * @param string|null|resource|StreamInterface|array $body 请求体
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string                                     $uri     指定链接
+     * @param string|null|resource|StreamInterface|array $body    请求体
+     * @param array                                      $headers 设定请求头设置
+     * @param array                                      $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function put($uri, $body = '', array $headers = [], array $opts = [])
@@ -214,9 +213,9 @@ class Http
 
     /**
      * TRACE 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function trace($uri, array $headers = [], array $opts = [])
@@ -226,9 +225,9 @@ class Http
 
     /**
      * MOVE 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function move($uri, array $headers = [], array $opts = [])
@@ -238,9 +237,9 @@ class Http
 
     /**
      * COPY 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function copy($uri, array $headers = [], array $opts = [])
@@ -250,9 +249,9 @@ class Http
 
     /**
      * LINK 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function link($uri, array $headers = [], array $opts = [])
@@ -262,9 +261,9 @@ class Http
 
     /**
      * UNLINK 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function unlink($uri, array $headers = [], array $opts = [])
@@ -274,9 +273,9 @@ class Http
 
     /**
      * WRAPPED 请求
-     * @param string $uri 指定链接
-     * @param array $headers 设定请求头设置
-     * @param array $opts 参数配置数组
+     * @param string $uri     指定链接
+     * @param array  $headers 设定请求头设置
+     * @param array  $opts    参数配置数组
      * @return string|false 返回响应内容，失败是返回false
      */
     public static function wrapped($uri, array $headers = [], array $opts = [])
@@ -304,11 +303,11 @@ class Http
 
     /**
      * 发送带请求体数据
-     * @param string $method 请求方式
-     * @param string|UriInterface $uri 请求URI
-     * @param string|null|resource|StreamInterface $body 请求体
-     * @param array $headers 报头信息
-     * @param array $opts CURL选项
+     * @param string                               $method  请求方式
+     * @param string|UriInterface                  $uri     请求URI
+     * @param string|null|resource|StreamInterface $body    请求体
+     * @param array                                $headers 报头信息
+     * @param array                                $opts    CURL选项
      * @return string|false 返回响应内容，失败是返回false
      */
     private static function sendPostFields($method, $uri, $body = null, array $headers = [], array $opts = [])

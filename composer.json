@@ -11,14 +11,17 @@
   "require": {
     "php": ">=7.0.0",
     "ext-curl": "*",
-    "psr/http-message": "~1.0",
-    "fize/http": "~1.0"
+    "psr/http-message": "~1.0.0",
+    "fize/http": "~1.0.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.0.0"
+    "ext-ftp": "*",
+    "ext-sockets": "*",
+    "phpunit/phpunit": "~9.1.0"
   },
   "suggest": {
-    "ext-ftp": "*"
+    "ext-ftp": "*",
+    "ext-sockets": "*"
   },
   "autoload": {
     "psr-4": {

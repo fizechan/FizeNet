@@ -1,9 +1,6 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
-
 
 namespace fize\net;
-
 
 use Exception;
 
@@ -15,10 +12,9 @@ class Socket
 {
 
     /**
-     * 当前套接字
-     * @var resource
+     * @var resource 当前套接字
      */
-    private $_socket = null;
+    private $_socket;
 
     /**
      * 构造函数
@@ -58,7 +54,7 @@ class Socket
      * 如果套接字是 AF_INET族，那么 address 必须是一个四点分法的 IP 地址（例如 127.0.0.1 ）,该类型较为常用
      * 如果套接字是 AF_UNIX族，那么 address 是 Unix 套接字一部分（例如 /tmp/my.sock ）。
      * @param string $address 服务端地址
-     * @param int $port 指定端口
+     * @param int    $port    指定端口
      * @return bool
      */
     public function bind($address, $port = 0)
@@ -100,7 +96,7 @@ class Socket
     /**
      * 客户端开启一个套接字连接
      * @param string $address IPV4\IPV6\Unix套接字
-     * @param int $port 端口号
+     * @param int    $port    端口号
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE
      */
     public function connect($address, $port = 0)
@@ -110,7 +106,7 @@ class Socket
 
     /**
      * 创建一个新的监听全部接口的套接字
-     * @param int $port 监听端口
+     * @param int $port    监听端口
      * @param int $backlog 连接队列的最大长度
      * @return Socket
      * @throws Exception
@@ -130,10 +126,10 @@ class Socket
      *
      * 参数 `$type` :
      *   SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
-     * @param int $domain 指定协议 AF_INET/AF_INET6/AF_UNIX
-     * @param int $type 套接字使用的类型
-     * @param int $protocol 定 domain 套接字下的具体协议
-     * @param array $obj 注意该数组保存的是Socket对象而非socket资源
+     * @param int   $domain   指定协议 AF_INET/AF_INET6/AF_UNIX
+     * @param int   $type     套接字使用的类型
+     * @param int   $protocol 定 domain 套接字下的具体协议
+     * @param array $obj      注意该数组保存的是Socket对象而非socket资源
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE 。
      */
     public static function createPair($domain, $type, $protocol, array &$obj)
@@ -153,8 +149,8 @@ class Socket
      *
      * 参数 `$type` :
      *   SOCK_STREAM/SOCK_DGRAM/SOCK_SEQPACKET/SOCK_RAW/SOCK_RDM
-     * @param int $domain 指定协议 AF_INET/AF_INET6/AF_UNIX
-     * @param int $type 套接字使用的类型
+     * @param int $domain   指定协议 AF_INET/AF_INET6/AF_UNIX
+     * @param int $type     套接字使用的类型
      * @param int $protocol 定 domain 套接字下的具体协议
      * @return Socket
      * @throws Exception
@@ -171,7 +167,7 @@ class Socket
 
     /**
      * 获取当前套接字的套接字选项
-     * @param int $level 指定协议级别
+     * @param int $level   指定协议级别
      * @param int $optname 选项名
      * @return mixed
      */
@@ -183,7 +179,7 @@ class Socket
     /**
      * 获取当前套接字的套接字选项
      * 使用socket_get_option()的别名socket_getopt()
-     * @param int $level 指定协议级别
+     * @param int $level   指定协议级别
      * @param int $optname 选项名
      * @return mixed
      */
@@ -195,7 +191,7 @@ class Socket
     /**
      * 获取主机/端口或UNIX文件系统路径的远端
      * @param string $address 获取到的主机
-     * @param int $port 获取到的端口
+     * @param int    $port    获取到的端口
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE
      */
     public function getPeerName(&$address, &$port = null)
@@ -206,7 +202,7 @@ class Socket
     /**
      * 获取具体连接的主机/端口或UNIX文件系统路径的远端
      * @param string $addr 获取到的主机
-     * @param int $port 获取到的端口
+     * @param int    $port 获取到的端口
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE
      */
     public function getSockName(&$addr, &$port = null)
@@ -252,7 +248,7 @@ class Socket
     /**
      * 从套接字读取最大长度字节数
      * @param int $length 指定最大字节长度
-     * @param int $type 读取、断行方式
+     * @param int $type   读取、断行方式
      * @return string
      */
     public function read($length, $type = PHP_BINARY_READ)
@@ -269,9 +265,9 @@ class Socket
      *   flags的值可以为下列任意flag的组合。
      *   使用按位或运算符(|)来 组合不同的flag。
      *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
-     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。
-     * @param int $len 长度最多为 len 字节的数据将被接收。
-     * @param int $flags 标识
+     * @param string $buf   从socket中获取的数据将被保存在由 buf 制定的变量中。
+     * @param int    $len   长度最多为 len 字节的数据将被接收。
+     * @param int    $flags 标识
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recv(&$buf, $len, $flags)
@@ -288,11 +284,11 @@ class Socket
      *   flags的值可以为下列任意flag的组合。
      *   使用按位或运算符(|)来 组合不同的flag。
      *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
-     * @param string $buf 从socket中获取的数据将被保存在由 buf 制定的变量中。
-     * @param int $len 长度最多为 len 字节的数据将被接收。
-     * @param int $flags 标识
-     * @param string $name 获取到的主机
-     * @param int $port 获取到的端口
+     * @param string $buf   从socket中获取的数据将被保存在由 buf 制定的变量中。
+     * @param int    $len   长度最多为 len 字节的数据将被接收。
+     * @param int    $flags 标识
+     * @param string $name  获取到的主机
+     * @param int    $port  获取到的端口
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recvFrom(&$buf, $len, $flags, &$name, &$port = null)
@@ -309,7 +305,7 @@ class Socket
      *   使用按位或运算符(|)来 组合不同的flag。
      *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
      * @param string $message
-     * @param int $flags 标识
+     * @param int    $flags 标识
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recvMsg($message, $flags = null)
@@ -321,11 +317,11 @@ class Socket
      * socket多路选择
      *
      * 注意返回的是socket资源而非Socket对象
-     * @param array $read 监听到的发生读取的socket资源
-     * @param array $write 监听到的发生写入的socket资源
-     * @param array $except 监听到的发生异常的socket资源
-     * @param int $tv_sec 服务端超时时间
-     * @param int $tv_usec 客服端超时时间
+     * @param array $read    监听到的发生读取的socket资源
+     * @param array $write   监听到的发生写入的socket资源
+     * @param array $except  监听到的发生异常的socket资源
+     * @param int   $tv_sec  服务端超时时间
+     * @param int   $tv_usec 客服端超时时间
      * @return int 返回获取到的socket个数
      */
     public static function select(array &$read, array &$write, array &$except, $tv_sec, $tv_usec = 0)
@@ -335,9 +331,9 @@ class Socket
 
     /**
      * 发送数据
-     * @param string $buf 包含将要发送到远程主机的数据的缓冲区。
-     * @param int $len 将从缓冲区发送到远程主机的字节数量。
-     * @param int $flags MSG_OOB/MSG_EOR/MSG_EOF/MSG_DONTROUTE
+     * @param string $buf   包含将要发送到远程主机的数据的缓冲区。
+     * @param int    $len   将从缓冲区发送到远程主机的字节数量。
+     * @param int    $flags MSG_OOB/MSG_EOR/MSG_EOF/MSG_DONTROUTE
      * @return int 成功时返回发送的字节数量，失败时返回false
      */
     public function send($buf, $len, $flags)
@@ -350,7 +346,7 @@ class Socket
      *
      * 该方法由于官方文档未编写，不建议使用
      * @param array $message
-     * @param int $flags
+     * @param int   $flags
      * @return int 成功时返回发送的字节数量，失败时返回false
      */
     public function sendMsg(array $message, $flags)
@@ -360,11 +356,11 @@ class Socket
 
     /**
      * 对socket(导向连接也可以)发送数据
-     * @param string $buf 包含将要发送到远程主机的数据的缓冲区。
-     * @param int $len 将从缓冲区发送到远程主机的字节数量。
-     * @param int $flags MSG_OOB/MSG_EOR/MSG_EOF/MSG_DONTROUTE
-     * @param string $addr 获取到的主机
-     * @param int $port 获取到的端口
+     * @param string $buf   包含将要发送到远程主机的数据的缓冲区。
+     * @param int    $len   将从缓冲区发送到远程主机的字节数量。
+     * @param int    $flags MSG_OOB/MSG_EOR/MSG_EOF/MSG_DONTROUTE
+     * @param string $addr  获取到的主机
+     * @param int    $port  获取到的端口
      * @return int 成功时返回发送的字节数量，失败时返回false
      */
     public function sendTo($buf, $len, $flags, $addr, $port = 0)
@@ -392,9 +388,9 @@ class Socket
 
     /**
      * 设置当前socket
-     * @param int $level 指定协议级别
-     * @param int $optname 选项名
-     * @param mixed $optval 选项值
+     * @param int   $level   指定协议级别
+     * @param int   $optname 选项名
+     * @param mixed $optval  选项值
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE
      */
     public function setOption($level, $optname, $optval)
@@ -406,9 +402,9 @@ class Socket
      * 设置当前socket
      *
      * 实际是socket_set_option的别名socket_setopt
-     * @param int $level 指定协议级别
-     * @param int $optname 选项名
-     * @param mixed $optval 选项值
+     * @param int   $level   指定协议级别
+     * @param int   $optname 选项名
+     * @param mixed $optval  选项值
      * @return bool 成功时返回 TRUE ， 或者在失败时返回 FALSE
      */
     public function setOpt($level, $optname, $optval)
@@ -439,7 +435,7 @@ class Socket
     /**
      * 写入到socket
      * @param string $buffer 包含将要写入到socket的数据的缓冲区。
-     * @param int $length 指定要写入的最大字节长度
+     * @param int    $length 指定要写入的最大字节长度
      * @return int 返回写入的字节长度
      */
     public function write($buffer, $length = 0)

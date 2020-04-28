@@ -1,10 +1,9 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
 /**
- * FTP管理类
+ * FTP管理
  * @todo 待测试
  */
 class Ftp
@@ -17,12 +16,12 @@ class Ftp
 
     /**
      * 构造函数
-     * @param string $host 要连接的服务器
+     * @param string $host     要连接的服务器
      * @param string $username 登录用户名
      * @param string $password 登录密码
-     * @param int $port 端口号，默认21
-     * @param int $timeout 超时时间，默认90(秒)
-     * @param bool $ssl 是否为SSL-FTP连接
+     * @param int    $port     端口号，默认21
+     * @param int    $timeout  超时时间，默认90(秒)
+     * @param bool   $ssl      是否为SSL-FTP连接
      */
     public function __construct($host, $username = null, $password = null, $port = 21, $timeout = 90, $ssl = false)
     {
@@ -48,9 +47,9 @@ class Ftp
 
     /**
      * 格式化路径，解决中文乱码及中文路径无效问题
-     * @todo 待测试修改
      * @param string $path 要格式化的路径
      * @return string
+     * @todo 待测试修改
      */
     private function _pathFormat($path)
     {
@@ -59,8 +58,8 @@ class Ftp
 
     /**
      * 为要上传的文件预分配空间
-     * @param int $filesize 要分配的空间，以字节为单位。
-     * @param string $result 如果提供此参数，那么服务器的响应 会以文本方式设置到 result 中。
+     * @param int    $filesize 要分配的空间，以字节为单位。
+     * @param string $result   如果提供此参数，那么服务器的响应 会以文本方式设置到 result 中。
      * @return bool
      */
     public function alloc($filesize, &$result = null)
@@ -91,7 +90,7 @@ class Ftp
     /**
      * 设置 FTP 服务器上的文件权限
      * 经测试，在windows环境下该方法无效，windows并没有针对FTP的权限之说
-     * @param int $mode 要设置的权限值，八进制值。
+     * @param int    $mode     要设置的权限值，八进制值。
      * @param string $filename 远程文件名称。
      * @return int 操作成功返回文件新的权限，操作失败返回 FALSE。
      */
@@ -111,9 +110,9 @@ class Ftp
 
     /**
      * 建立一个新的FTP连接
-     * @param string $host 要连接的服务器
-     * @param int $port 端口号，默认21
-     * @param int $timeout 超时时间，默认90(秒)
+     * @param string $host    要连接的服务器
+     * @param int    $port    端口号，默认21
+     * @param int    $timeout 超时时间，默认90(秒)
      */
     public function connect($host, $port = 21, $timeout = 90)
     {
@@ -142,11 +141,11 @@ class Ftp
 
     /**
      * 从 FTP 服务器上下载一个文件并保存到本地一个已经打开的文件中
-     * @param resource $handle 本地已经打开的文件的句柄。
-     * @param string $remote_file 远程文件的路径。
-     * @param int $mode 传送模式参数， 必须是 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  中的一个。
-     * @param int $resumepos 远程文件开始下载的位置。
-     * @param bool $nb 是否以非阻塞方式
+     * @param resource $handle      本地已经打开的文件的句柄。
+     * @param string   $remote_file 远程文件的路径。
+     * @param int      $mode        传送模式参数， 必须是 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  中的一个。
+     * @param int      $resumepos   远程文件开始下载的位置。
+     * @param bool     $nb          是否以非阻塞方式
      * @return mixed 如果非阻塞则返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA，否则返回下载结果
      */
     public function fget($handle, $remote_file, $mode, $resumepos = 0, $nb = false)
@@ -160,11 +159,11 @@ class Ftp
 
     /**
      * 上传一个已经打开的文件到 FTP 服务器
-     * @param string $remote_file 远程文件路径。
-     * @param resource $handle 打开的本地文件句柄，读取到文件末尾。
-     * @param int $mode 传输模式只能为 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  其中的一个。
-     * @param int $startpos 远程文件上传的开始位置。
-     * @param bool $nb 是否以非阻塞方式
+     * @param string   $remote_file 远程文件路径。
+     * @param resource $handle      打开的本地文件句柄，读取到文件末尾。
+     * @param int      $mode        传输模式只能为 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  其中的一个。
+     * @param int      $startpos    远程文件上传的开始位置。
+     * @param bool     $nb          是否以非阻塞方式
      * @return mixed 如果非阻塞则返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA，否则返回上传结果
      */
     public function fput($remote_file, $handle, $mode, $startpos = 0, $nb = false)
@@ -188,11 +187,11 @@ class Ftp
 
     /**
      * 从 FTP 服务器上下载一个文件
-     * @param string $local_file 文件本地的路径（如果文件已经存在，则会被覆盖）。
+     * @param string $local_file  文件本地的路径（如果文件已经存在，则会被覆盖）。
      * @param string $remote_file 文件的远程路径。
-     * @param int $mode 传送模式。只能为 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  中的其中一个。
-     * @param int $resumepos 从远程文件的这个位置继续下载。
-     * @param bool $nb 是否以非阻塞方式
+     * @param int    $mode        传送模式。只能为 (文本模式) FTP_ASCII  或 (二进制模式) FTP_BINARY  中的其中一个。
+     * @param int    $resumepos   从远程文件的这个位置继续下载。
+     * @param bool   $nb          是否以非阻塞方式
      * @return mixed 如果非阻塞则返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA，否则返回下载结果
      */
     public function get($local_file, $remote_file, $mode, $resumepos = 0, $nb = false)
@@ -270,10 +269,10 @@ class Ftp
     /**
      * 上传文件到 FTP 服务器
      * @param string $remote_file 远程文件路径。
-     * @param string $local_file 本地文件路径。
-     * @param int $mode 传送模式，只能为 FTP_ASCII （文本模式）或 FTP_BINARY （二进制模式）,默认为二进制。
-     * @param int $startpos 远程文件上传的开始位置。
-     * @param bool $nb 是否以非阻塞方式
+     * @param string $local_file  本地文件路径。
+     * @param int    $mode        传送模式，只能为 FTP_ASCII （文本模式）或 FTP_BINARY （二进制模式）,默认为二进制。
+     * @param int    $startpos    远程文件上传的开始位置。
+     * @param bool   $nb          是否以非阻塞方式
      * @return mixed 如果非阻塞则返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA，否则返回上传结果
      */
     public function put($remote_file, $local_file, $mode = FTP_BINARY, $startpos = 0, $nb = false)
@@ -319,7 +318,7 @@ class Ftp
     /**
      * 返回指定目录下文件的详细列表
      * @param string $directory 目录路径。
-     * @param bool $recursive 如果此参数为 TRUE ，实际执行的命令将会为 LIST -R。
+     * @param bool   $recursive 如果此参数为 TRUE ，实际执行的命令将会为 LIST -R。
      * @return array
      */
     public function rawlist($directory, $recursive = false)
@@ -342,7 +341,7 @@ class Ftp
     /**
      * 删除 FTP 服务器上的一个目录
      * @param string $directory 要删除的目录
-     * @param bool $force 如果该目录不为空，是否强制删除
+     * @param bool   $force     如果该目录不为空，是否强制删除
      * @return bool
      */
     public function rmdir($directory, $force = false)
@@ -364,8 +363,8 @@ class Ftp
 
     /**
      * 设置各种 FTP 运行时选项
-     * @param int $option 选项标识
-     * @param mixed $value 本参数取决于要修改哪个 option。
+     * @param int   $option 选项标识
+     * @param mixed $value  本参数取决于要修改哪个 option。
      * @return bool
      */
     public function setOption($option, $value)
@@ -396,9 +395,9 @@ class Ftp
     /**
      * 打开一个到 host 的安全 FTP 连接（SSL-FTP）。
      * 注意：本函数有可能不存在，只有 PHP 构建时同时包含了 ftp 模块 和 OpenSSL 模块时， ftp_ssl_connect()  函数才可用。
-     * @param string $host 要连接的服务器
-     * @param int $port 端口号，默认21
-     * @param int $timeout 超时时间，默认90(秒)
+     * @param string $host    要连接的服务器
+     * @param int    $port    端口号，默认21
+     * @param int    $timeout 超时时间，默认90(秒)
      */
     public function sslConnect($host, $port = 21, $timeout = 90)
     {

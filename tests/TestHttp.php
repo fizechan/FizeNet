@@ -1,6 +1,5 @@
 <?php
 
-
 use fize\net\Http;
 use fize\http\Response;
 use PHPUnit\Framework\TestCase;
