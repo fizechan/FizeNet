@@ -7,56 +7,15 @@ use PHPUnit\Framework\TestCase;
 class TestHttp extends TestCase
 {
 
-    public function testGetLastErrCode()
-    {
-        $content = Http::get('https://www.g-medal.com/1.html');
-        var_dump($content);
-        $errcode = Http::getLastErrCode();
-        var_dump($errcode);
-        self::assertNotEmpty($errcode);
-    }
-
-    public function testGetLastErrMsg()
-    {
-        $content = Http::get('https://www.g-medal.com/1.html');
-        var_dump($content);
-        $errmsg = Http::getLastErrMsg();
-        var_dump($errmsg);
-        self::assertNotEmpty($errmsg);
-    }
-
-    public function testGetLastResponse()
-    {
-        Http::get('https://www.g-medal.com/1.html');
-        $response = Http::getLastResponse();
-        var_dump($response);
-        self::assertInstanceOf(Response::class, $response);
-    }
-
-    public function testConfig()
-    {
-        Http::config(null, 60, 3);
-        self::assertTrue(true);
-    }
-
-    public function testSend()
-    {
-        $headers = [
-            'accept' => 'application/json'
-        ];
-        $content = Http::send('DELETE', 'https://httpbin.org/delete', null, $headers);
-        echo $content;
-        self::assertNotEmpty($content);
-    }
-
     public function testGet()
     {
         $headers = [
             'accept' => 'application/json'
         ];
-        $content = Http::get('https://httpbin.org/get', $headers);
-        echo $content;
-        self::assertNotEmpty($content);
+        $response = Http::get('https://httpbin.org/get', false, $headers);
+        var_dump($response);
+        echo $response->getBody();
+        self::assertInstanceOf(Response::class, $response);
     }
 
     public function testPost()
@@ -72,7 +31,7 @@ class TestHttp extends TestCase
             'salt' => '123456',
             'sign' => '9ac0dad8ab7abafc710bf5a9a8516e51'
         ];
-        $content = Http::post('http://api.fanyi.baidu.com/api/trans/vip/translate', $body, $headers);
+        $content = Http::post('http://api.fanyi.baidu.com/api/trans/vip/translate', $body, true, $headers);
         echo $content;
         self::assertNotEmpty($content);
     }
@@ -82,7 +41,7 @@ class TestHttp extends TestCase
         $headers = [
             'accept' => 'application/json'
         ];
-        $content = Http::options('https://httpbin.org/options', $headers);
+        $content = Http::options('https://httpbin.org/options', true, $headers);
         echo $content;
         self::assertNotEmpty($content);
     }

@@ -1,13 +1,18 @@
 {
-  "name": "fize/net",
-  "description": "网络相关操作类库",
-  "license": "MIT",
   "authors": [
     {
       "name": "FizeChan",
       "email": "chenfengzhan@qq.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "fize\\net\\": "src"
+    }
+  },
+  "description": "网络相关操作类库",
+  "license": "MIT",
+  "name": "fize/net",
   "require": {
     "php": ">=7.0.0",
     "ext-curl": "*",
@@ -22,10 +27,5 @@
   "suggest": {
     "ext-ftp": "*",
     "ext-sockets": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "fize\\net\\": "src"
-    }
   }
 }
