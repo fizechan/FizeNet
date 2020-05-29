@@ -25,7 +25,7 @@ class Http
     /**
      * GET 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     附加的文件头
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -40,7 +40,7 @@ class Http
      * POST 请求
      * @param string                                     $uri         指定链接
      * @param string|null|resource|StreamInterface|array $body        请求体
-     * @param bool                                       $return_body 是否返回主体内容
+     * @param bool                                       $return_body 是否只返回主体内容
      * @param array                                      $headers     设定请求头设置
      * @param array                                      $opts        参数配置数组
      * @param array                                      $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -48,13 +48,13 @@ class Http
      */
     public static function post($uri, $body, $return_body = false, array $headers = [], array $opts = [], array $config = [])
     {
-        return self::sendPostFields('POST', $uri, $body, $return_body, $headers, $opts, $config);
+        return self::send('POST', $uri, $body, $return_body, $headers, $opts, $config);
     }
 
     /**
      * OPTIONS 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -68,7 +68,7 @@ class Http
     /**
      * HEAD 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -82,7 +82,7 @@ class Http
     /**
      * DELETE 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -96,7 +96,7 @@ class Http
     /**
      * PATCH 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -111,7 +111,7 @@ class Http
      * PUT 请求
      * @param string                                     $uri         指定链接
      * @param string|null|resource|StreamInterface|array $body        请求体
-     * @param bool                                       $return_body 是否返回主体内容
+     * @param bool                                       $return_body 是否只返回主体内容
      * @param array                                      $headers     设定请求头设置
      * @param array                                      $opts        参数配置数组
      * @param array                                      $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -119,13 +119,13 @@ class Http
      */
     public static function put($uri, $body = '', $return_body = false, array $headers = [], array $opts = [], array $config = [])
     {
-        return self::sendPostFields('PUT', $uri, $body, $return_body, $headers, $opts, $config);
+        return self::send('PUT', $uri, $body, $return_body, $headers, $opts, $config);
     }
 
     /**
      * TRACE 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -139,7 +139,7 @@ class Http
     /**
      * MOVE 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -153,7 +153,7 @@ class Http
     /**
      * COPY 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -167,7 +167,7 @@ class Http
     /**
      * LINK 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -181,7 +181,7 @@ class Http
     /**
      * UNLINK 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -195,7 +195,7 @@ class Http
     /**
      * WRAPPED 请求
      * @param string $uri         指定链接
-     * @param bool   $return_body 是否返回主体内容
+     * @param bool   $return_body 是否只返回主体内容
      * @param array  $headers     设定请求头设置
      * @param array  $opts        参数配置数组
      * @param array  $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
@@ -208,13 +208,13 @@ class Http
 
     /**
      * 简易 HTTP 客户端
-     * @param string                               $method      请求方式
-     * @param string|UriInterface                  $uri         请求URI
-     * @param string|null|resource|StreamInterface $body        请求体
-     * @param bool                                 $return_body 是否返回主体内容
-     * @param array                                $headers     报头信息
-     * @param array                                $opts        CURL选项
-     * @param array                                $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
+     * @param string                                     $method      请求方式
+     * @param string|UriInterface                        $uri         请求URI
+     * @param string|null|resource|StreamInterface|array $body        请求体
+     * @param bool                                       $return_body 是否只返回主体内容
+     * @param array                                      $headers     报头信息
+     * @param array                                      $opts        CURL选项
+     * @param array                                      $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
      * @return Response|string $return_body 为 true 时返回响应主体内容，否则返回响应对象
      */
     private static function send($method, $uri, $body = null, $return_body = false, array $headers = [], array $opts = [], array $config = [])
@@ -222,51 +222,34 @@ class Http
         $cookie_dir = isset($config['cookie_dir']) ? $config['cookie_dir'] : null;
         $time_out = isset($config['time_out']) ? $config['time_out'] : 30;
         $retries = isset($config['retries']) ? $config['retries'] : 1;
+
         $client = new Client($cookie_dir, $time_out, $retries);
         if ($opts) {
             $client->setOptions($opts);
         }
+
+        $dataPOST = null;
+        if (is_string($body)) {
+            $dataPOST = $body;
+        } elseif (self::isUploadFile($body)) {
+            $dataPOST = $body;  //需要POST上传文件时直接传递数组
+        } elseif (!empty($body)) {
+            $dataPOST = http_build_query($body);
+        }
+        if (!is_null($dataPOST)) {
+            $client->setOption(CURLOPT_POSTFIELDS, $dataPOST);
+        }
+
+        if (is_array($body)) {
+            $body = null;  //使用CURL直接传递body
+        }
+
         $request = new Request($method, $uri, $body, $headers);
         $response = $client->sendRequest($request);
         if ($return_body === false) {
             return $response;
         }
         return (string)$response->getBody();
-    }
-
-    /**
-     * 发送带请求体数据
-     * @param string                               $method      请求方式
-     * @param string|UriInterface                  $uri         请求URI
-     * @param string|null|resource|StreamInterface $body        请求体
-     * @param bool                                 $return_body 是否返回主体内容
-     * @param array                                $headers     报头信息
-     * @param array                                $opts        CURL选项
-     * @param array                                $config      客户端配置 ['cookie_dir' => *, 'time_out' => *, 'retries' => *]
-     * @return Response|string $return_body 为 true 时返回响应主体内容，否则返回响应对象
-     */
-    private static function sendPostFields($method, $uri, $body = null, $return_body = false, array $headers = [], array $opts = [], array $config = [])
-    {
-        if (is_string($body)) {
-            $strPOST = $body;
-        } else {
-            if (self::isUploadFile($body)) {
-                $strPOST = $body;  //需要POST上传文件时直接传递数组
-            } else {
-                $strPOST = http_build_query($body);
-            }
-        }
-        if (is_array($body)) {
-            $add_opts = [
-                CURLOPT_POSTFIELDS => $strPOST
-            ];
-            if (self::isUploadFile($body)) {
-                $add_opts[CURLOPT_UPLOAD] = true;
-            }
-            $opts = $opts + $add_opts;
-            $body = null;  //使用CURL直接传递body
-        }
-        return self::send($method, $uri, $body, $return_body, $headers, $opts, $config);
     }
 
     /**
