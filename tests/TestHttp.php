@@ -1,7 +1,6 @@
 <?php
 
 use fize\net\Http;
-use fize\http\Response;
 use PHPUnit\Framework\TestCase;
 
 class TestHttp extends TestCase
@@ -12,10 +11,9 @@ class TestHttp extends TestCase
         $headers = [
             'accept' => 'application/json'
         ];
-        $response = Http::get('https://httpbin.org/get', false, $headers);
-        var_dump($response);
-        echo $response->getBody();
-        self::assertInstanceOf(Response::class, $response);
+        $content = Http::get('https://httpbin.org/get', $headers);
+        var_dump($content);
+        self::assertIsString($content);
     }
 
     public function testPost()
@@ -31,7 +29,7 @@ class TestHttp extends TestCase
             'salt' => '123456',
             'sign' => '9ac0dad8ab7abafc710bf5a9a8516e51'
         ];
-        $content = Http::post('http://api.fanyi.baidu.com/api/trans/vip/translate', $body, true, $headers);
+        $content = Http::post('http://api.fanyi.baidu.com/api/trans/vip/translate', $body, $headers);
         echo $content;
         self::assertNotEmpty($content);
     }
@@ -41,7 +39,7 @@ class TestHttp extends TestCase
         $headers = [
             'accept' => 'application/json'
         ];
-        $content = Http::options('https://httpbin.org/options', true, $headers);
+        $content = Http::options('https://httpbin.org/options', $headers);
         echo $content;
         self::assertNotEmpty($content);
     }
