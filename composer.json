@@ -1,4 +1,7 @@
 {
+  "name": "fize/net",
+  "description": "网络相关操作类库",
+  "license": "MIT",
   "authors": [
     {
       "name": "FizeChan",
@@ -10,21 +13,15 @@
       "fize\\net\\": "src"
     }
   },
-  "description": "网络相关操作类库",
-  "license": "MIT",
-  "name": "fize/net",
   "require": {
     "php": ">=7.0.0",
-    "ext-curl": "*",
-    "psr/http-message": "~1.0.0",
-    "fize/http": "~1.2.1"
+    "fize/http": "~2.0.0"
   },
   "require-dev": {
-    "ext-ftp": "*",
-    "ext-sockets": "*",
-    "phpunit/phpunit": "~9.1.0"
+    "phpunit/phpunit": "~9.5"
   },
   "suggest": {
+    "ext-curl": "*",
     "ext-ftp": "*",
     "ext-sockets": "*"
   }
