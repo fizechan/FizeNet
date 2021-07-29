@@ -14,7 +14,7 @@
     }
   },
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "fize/http": "~2.0.0"
   },
   "require-dev": {
