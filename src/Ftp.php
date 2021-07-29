@@ -61,7 +61,7 @@ class Ftp
      * 经测试，windows环境下有出现返回false并出现警告，但实际切换成功的情况
      * @return bool
      */
-    public function cdup()
+    public function cdup(): bool
     {
         return ftp_cdup($this->ftp);
     }
@@ -186,7 +186,7 @@ class Ftp
      * @param string $password 密码
      * @return bool
      */
-    private function login(string $username, string $password)
+    private function login(string $username, string $password): bool
     {
         return ftp_login($this->ftp, $username, $password);
     }
@@ -228,7 +228,7 @@ class Ftp
      * @param int      $resumepos   远程文件开始下载的位置。
      * @return int 返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA
      */
-    public function nbFget($handle, string $remote_file, int $mode = FTP_BINARY, int $resumepos = 0)
+    public function nbFget($handle, string $remote_file, int $mode = FTP_BINARY, int $resumepos = 0): int
     {
         return ftp_nb_fget($this->ftp, $handle, $remote_file, $mode, $resumepos);
     }
@@ -241,7 +241,7 @@ class Ftp
      * @param int      $startpos    远程文件上传的开始位置。
      * @return int 返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA
      */
-    public function nbFput(string $remote_file, $handle, int $mode = FTP_BINARY, int $startpos = 0)
+    public function nbFput(string $remote_file, $handle, int $mode = FTP_BINARY, int $startpos = 0): int
     {
         return ftp_nb_fput($this->ftp, $remote_file, $handle, $mode, $startpos);
     }
@@ -254,7 +254,7 @@ class Ftp
      * @param int    $resumepos   从远程文件的这个位置继续下载。
      * @return int 返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA
      */
-    public function nbGet(string $local_file, string $remote_file, int $mode = FTP_BINARY, int $resumepos = 0)
+    public function nbGet(string $local_file, string $remote_file, int $mode = FTP_BINARY, int $resumepos = 0): int
     {
         return ftp_nb_get($this->ftp, $local_file, $remote_file, $mode, $resumepos);
     }
@@ -267,7 +267,7 @@ class Ftp
      * @param int    $startpos    远程文件上传的开始位置。
      * @return int 如果非阻塞则返回FTP_FAILED  或 FTP_FINISHED  或 FTP_MOREDATA
      */
-    public function nbPut(string $remote_file, string $local_file, int $mode = FTP_BINARY, int $startpos = 0)
+    public function nbPut(string $remote_file, string $local_file, int $mode = FTP_BINARY, int $startpos = 0): int
     {
         return ftp_nb_put($this->ftp, $remote_file, $local_file, $mode, $startpos);
     }
@@ -277,7 +277,7 @@ class Ftp
      * @param string|null $directory 指定要列表的目录，如果不指定则默认为当前目录
      * @return array 键值为FTP绝对路径
      */
-    public function nlist(string $directory = null)
+    public function nlist(string $directory = null): array
     {
         if (is_null($directory)) {
             $directory = $this->pwd();
@@ -303,7 +303,7 @@ class Ftp
      * @param int    $startpos    远程文件上传的开始位置。
      * @return bool 返回上传结果
      */
-    public function put(string $remote_file, string $local_file, int $mode = FTP_BINARY, int $startpos = 0)
+    public function put(string $remote_file, string $local_file, int $mode = FTP_BINARY, int $startpos = 0): bool
     {
         return ftp_put($this->ftp, $remote_file, $local_file, $mode, $startpos);
     }
@@ -402,7 +402,7 @@ class Ftp
      * @param bool|int $value  本参数取决于要修改哪个 option。
      * @return bool
      */
-    public function setOption(int $option, $value)
+    public function setOption(int $option, $value): bool
     {
         return ftp_set_option($this->ftp, $option, $value);
     }

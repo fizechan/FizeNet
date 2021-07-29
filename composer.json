@@ -21,7 +21,6 @@
     "phpunit/phpunit": "~9.5"
   },
   "suggest": {
-    "ext-curl": "*",
     "ext-ftp": "*",
     "ext-sockets": "*"
   }
