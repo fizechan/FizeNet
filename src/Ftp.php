@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
@@ -15,22 +15,24 @@ class Ftp
 
     /**
      * 构造函数
-     * @param string $host     要连接的服务器
-     * @param string $username 登录用户名
-     * @param string $password 登录密码
-     * @param int    $port     端口号，默认21
-     * @param int    $timeout  超时时间，默认90(秒)
-     * @param bool   $ssl      是否为SSL-FTP连接
+     * @param string|null $host     要连接的服务器
+     * @param string|null $username 登录用户名
+     * @param string|null $password 登录密码
+     * @param int         $port     端口号，默认21
+     * @param int         $timeout  超时时间，默认90(秒)
+     * @param bool        $ssl      是否为SSL-FTP连接
      */
-    public function __construct(string $host, string $username = null, string $password = null, int $port = 21, int $timeout = 90, bool $ssl = false)
+    public function __construct(string $host = null, string $username = null, string $password = null, int $port = 21, int $timeout = 90, bool $ssl = false)
     {
-        if ($ssl) {
-            $this->sslConnect($host, $port, $timeout);
-        } else {
-            $this->connect($host, $port, $timeout);
-        }
-        if (!is_null($username)) {
-            $this->login($username, $password);
+        if ($host) {
+            if ($ssl) {
+                $this->sslConnect($host, $port, $timeout);
+            } else {
+                $this->connect($host, $port, $timeout);
+            }
+            if (!is_null($username)) {
+                $this->login($username, $password);
+            }
         }
     }
 
@@ -93,7 +95,7 @@ class Ftp
      * 关闭当前FTP连接
      * @return bool
      */
-    private function close(): bool
+    public function close(): bool
     {
         return ftp_close($this->ftp);
     }
@@ -104,7 +106,7 @@ class Ftp
      * @param int    $port    端口号，默认21
      * @param int    $timeout 超时时间，默认90(秒)
      */
-    private function connect(string $host, int $port = 21, int $timeout = 90)
+    public function connect(string $host, int $port = 21, int $timeout = 90)
     {
         $this->ftp = ftp_connect($host, $port, $timeout);
     }
@@ -186,7 +188,7 @@ class Ftp
      * @param string $password 密码
      * @return bool
      */
-    private function login(string $username, string $password): bool
+    public function login(string $username, string $password): bool
     {
         return ftp_login($this->ftp, $username, $password);
     }
@@ -378,13 +380,11 @@ class Ftp
                 $line = explode(' ', $row);
                 $name = $line[count($line) - 1];
                 if (substr($directory[0], 0, 1) == '/') {  // 绝对路径
-                    $full_path = $directory. '/' . $name;
+                    $full_path = $directory . '/' . $name;
+                } elseif ($pwd == '/') {
+                    $full_path = '/' . $directory . '/' . $name;
                 } else {
-                    if ($pwd == '/') {
-                        $full_path = '/' . $directory . '/' . $name;
-                    } else {
-                        $full_path = $pwd . '/' . $directory . '/' . $name;
-                    }
+                    $full_path = $pwd . '/' . $directory . '/' . $name;
                 }
                 if (substr($line[0], 0, 1) == 'd') {  // 是目录
                     $this->rmdir($full_path, true);
@@ -437,7 +437,7 @@ class Ftp
      * @param int    $port    端口号，默认21
      * @param int    $timeout 超时时间，默认90(秒)
      */
-    private function sslConnect(string $host, int $port = 21, int $timeout = 90)
+    public function sslConnect(string $host, int $port = 21, int $timeout = 90)
     {
         $this->ftp = ftp_ssl_connect($host, $port, $timeout);
     }

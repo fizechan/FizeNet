@@ -53,6 +53,21 @@ class TestFtp extends TestCase
         self::assertIsInt($ii);
     }
 
+    public function testClose()
+    {
+        $ftp = new Ftp('192.168.56.101', 'ftp01', '123456');
+        $rst = $ftp->close();
+        self::assertTrue($rst);
+    }
+
+    public function testConnect()
+    {
+        $ftp = new Ftp();
+        $ftp->connect('192.168.56.101', 'ftp01', '123456');
+        $rst = $ftp->close();
+        self::assertTrue($rst);
+    }
+
     public function testDelete()
     {
         $ftp = new Ftp('192.168.56.101', 'ftp01', '123456');
@@ -108,6 +123,13 @@ class TestFtp extends TestCase
         $ftp->pasv(true);
         $local_file = dirname(__DIR__) . '/temp/localfile2.txt';
         $rst = $ftp->get($local_file, 'localfile.txt');
+        self::assertTrue($rst);
+    }
+
+    public function testLogin()
+    {
+        $ftp = new Ftp('192.168.56.101');
+        $rst = $ftp->login('ftp01', '123456');
         self::assertTrue($rst);
     }
 
@@ -296,6 +318,14 @@ class TestFtp extends TestCase
         $size = $ftp->size('/localfile.txt');
         var_dump($size);
         self::assertIsInt($size);
+    }
+
+    public function testSslConnect()
+    {
+        $ftp = new Ftp();
+        $ftp->sslConnect('192.168.56.101', 'ftp01', '123456');
+        $rst = $ftp->close();
+        self::assertTrue($rst);
     }
 
     public function testSystype()

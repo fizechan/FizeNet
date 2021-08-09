@@ -14,8 +14,8 @@ class TestSocket extends TestCase
 
         $sock = new Socket();
         $sock->create(AF_INET, SOCK_STREAM, SOL_TCP);
-        $ret = $sock->bind($ip, $port);
-        $ret = $sock->listen(4);
+        $sock->bind($ip, $port);
+        $sock->listen(4);
 
         $count = 0;
         do {
@@ -45,7 +45,7 @@ class TestSocket extends TestCase
         $sock->create(AF_INET, SOCK_STREAM, SOL_TCP);
         $ret = $sock->bind($ip, $port);
         self::assertTrue($ret);
-        $ret = $sock->listen(4);
+        $sock->listen(4);
 
         $count = 0;
         do {
@@ -98,7 +98,6 @@ class TestSocket extends TestCase
 
         $in = "Ho\r\n";
         $in .= "first blood\r\n";
-        $out = '';
         $socket->write($in, strlen($in));
         while($out = $socket->read(8192)) {
             echo "接收服务器回传信息成功！\n";
@@ -410,8 +409,8 @@ class TestSocket extends TestCase
 
         $sock = new Socket();
         $sock->create(AF_INET, SOCK_STREAM, SOL_TCP);
-        $ret = $sock->bind($ip, $port);
-        $ret = $sock->listen(4);
+        $sock->bind($ip, $port);
+        $sock->listen(4);
 
         $count = 0;
         do {
@@ -447,8 +446,8 @@ class TestSocket extends TestCase
 
         $sock = new Socket();
         $sock->create(AF_INET, SOCK_STREAM, SOL_TCP);
-        $ret = $sock->bind($ip, $port);
-        $ret = $sock->listen(4);
+        $sock->bind($ip, $port);
+        $sock->listen(4);
 
         $count = 0;
         do {

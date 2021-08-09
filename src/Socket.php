@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\net;
 
@@ -303,7 +303,7 @@ class Socket
      *   使用按位或运算符(|)来 组合不同的flag。
      *   MSG_OOB/MSG_PEEK/MSG_WAITALL/MSG_DONTWAIT
      * @param array    $message 读取到的信息
-     * @param int|null $flags 标识
+     * @param int|null $flags   标识
      * @return int 返回一个数字，表示接收到的字节数。如果发生了错误，则返回 FALSE
      */
     public function recvMsg(array &$message, int $flags = null): int
