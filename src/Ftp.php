@@ -2,6 +2,8 @@
 
 namespace fize\net;
 
+use RuntimeException;
+
 /**
  * FTP管理
  */
@@ -108,7 +110,11 @@ class Ftp
      */
     public function connect(string $host, int $port = 21, int $timeout = 90)
     {
-        $this->ftp = ftp_connect($host, $port, $timeout);
+        $resource = ftp_connect($host, $port, $timeout);
+        if ($resource === false) {
+            throw new RuntimeException("Couldn't connect to $host:$port");
+        }
+        $this->ftp = $resource;
     }
 
     /**
@@ -439,7 +445,11 @@ class Ftp
      */
     public function sslConnect(string $host, int $port = 21, int $timeout = 90)
     {
-        $this->ftp = ftp_ssl_connect($host, $port, $timeout);
+        $resource = ftp_ssl_connect($host, $port, $timeout);
+        if ($resource === false) {
+            throw new RuntimeException("Couldn't SSL connect to $host:$port");
+        }
+        $this->ftp = $resource;
     }
 
     /**
