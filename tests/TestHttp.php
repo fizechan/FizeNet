@@ -1,6 +1,8 @@
 <?php
 
-use fize\net\Http;
+namespace Tests;
+
+use Fize\Net\Http;
 use PHPUnit\Framework\TestCase;
 
 class TestHttp extends TestCase

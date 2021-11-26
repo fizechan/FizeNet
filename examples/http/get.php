@@ -1,5 +1,5 @@
 <?php
-use fize\net\Http;
+use Fize\Net\Http;
 
 require_once './../../vendor/autoload.php';
 

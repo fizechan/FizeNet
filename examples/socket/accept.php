@@ -1,5 +1,5 @@
 <?php
-use fize\net\Socket;
+use Fize\Net\Socket;
 
 require_once './../../vendor/autoload.php';
 

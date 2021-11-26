@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\net\Ftp;
+use Fize\Net\Ftp;
 use PHPUnit\Framework\TestCase;
 
 class TestFtp extends TestCase

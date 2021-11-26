@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\net;
+namespace Fize\Net;
 
 use RuntimeException;
 

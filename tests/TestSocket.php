@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\net\Socket;
+use Fize\Net\Socket;
 use PHPUnit\Framework\TestCase;
 
 class TestSocket extends TestCase

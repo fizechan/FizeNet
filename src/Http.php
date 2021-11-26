@@ -1,8 +1,8 @@
 <?php
 
-namespace fize\net;
+namespace Fize\Net;
 
-use fize\http\ClientSimple;
+use Fize\Http\ClientSimple;
 
 /**
  * Http 简易客户端

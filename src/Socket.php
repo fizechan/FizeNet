@@ -1,6 +1,6 @@
-<?php /** @noinspection PhpComposerExtensionStubsInspection */
+<?php
 
-namespace fize\net;
+namespace Fize\Net;
 
 use Exception;
 
