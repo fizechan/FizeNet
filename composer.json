@@ -19,7 +19,8 @@
   },
   "suggest": {
     "ext-ftp": "*",
-    "ext-sockets": "*"
+    "ext-sockets": "*",
+    "phpseclib/phpseclib": "^3.0.11"
   },
   "autoload-dev": {
     "psr-4": {
@@ -27,6 +28,7 @@
     }
   },
   "require-dev": {
+    "phpseclib/phpseclib": "^3.0.11",
     "phpunit/phpunit": "^9.5.0"
   }
 }
