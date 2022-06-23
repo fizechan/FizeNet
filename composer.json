@@ -19,6 +19,8 @@
   },
   "suggest": {
     "ext-ftp": "*",
+    "ext-imap": "*",
+    "ext-ldap": "*",
     "ext-sockets": "*",
     "phpseclib/phpseclib": "^3.0.11"
   },
